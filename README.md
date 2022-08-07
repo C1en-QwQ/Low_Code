@@ -9,7 +9,7 @@
 * run
 
 ```
-npm run
+npm run dev
 ```
 
 ## 技术栈 
