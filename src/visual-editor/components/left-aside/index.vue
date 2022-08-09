@@ -8,6 +8,7 @@
             {{ tabItem.label }}
           </div>
         </template>
+        <component :is="tabItem.comp" v-bind="$attrs" />
       </el-tab-pane>
     </template>
   </el-tabs>
@@ -45,6 +46,7 @@
         padding: 20px 16px;
 
         .tab-item {
+          // windi css 的一个指令
           @apply flex flex-col items-center justify-center;
 
           [class^='el-icon-'] {
@@ -52,6 +54,11 @@
           }
         }
       }
+    }
+
+    > :deep(.el-tabs__content) {
+      height: 100%;
+      overflow-y: auto;
     }
   }
 </style>

@@ -1,0 +1,15 @@
+$boxShadow: -2px 0 4px 0 rgba(0, 0, 0, 0.1);
+
+.drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  width: 400px;
+  background-color: white;
+  transform: translateX(0);
+  box-shadow: $boxShadow;
+  transition: transform 0.5 ease-in-out;
+  contain: layout;
+}

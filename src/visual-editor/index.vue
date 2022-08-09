@@ -7,14 +7,23 @@
       <el-aside class="shadow-sm" width="300px">
         <LeftAside />
       </el-aside>
-      <el-main> main </el-main>
+      <el-main>
+        <!-- 中间编辑区域start -->
+        <SimularEditor />
+        <!-- 中间编辑区域end -->
+        <!-- 右侧属性面板start -->
+        <RightAttributePanel />
+        <!-- 右侧属性面板end -->
+      </el-main>
     </el-container>
   </el-container>
 </template>
 
 <script setup lang="ts">
   import Header from './components/header/index.vue';
-  import LeftAside from './components/left-aside/index.vue'
+  import LeftAside from './components/left-aside/index.vue';
+  import SimularEditor from './components/simulator-editor/index.vue';
+  import RightAttributePanel from './components/right-attribute-panel'
 
   // const BASE_URL = import.meta.env.BASE_URL
   // console.log('BASE_URL', BASE_URL)

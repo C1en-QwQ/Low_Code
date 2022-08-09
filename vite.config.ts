@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 import { resolve } from 'path';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
@@ -19,6 +20,7 @@ export default ({ mode }) =>
     base: baseUrl[mode],
     plugins: [
       vue(),
+      vueJsx(),
       AutoImport({
         resolvers: [ElementPlusResolver()],
       }),

@@ -42,12 +42,6 @@
   <!-- <Preview v-model:visible="isShowH5Preview" /> -->
 </template>
 
-<script lang="ts">
-  export default {
-    name: 'Header'
-  }
-</script>
-
 <script setup lang="ts">
   import { VideoPlay } from '@element-plus/icons-vue';
   import { BASE_URL } from '@/visual-editor/utils';
@@ -56,7 +50,9 @@
   // import { ref } from '@vue/reactivity';
   // console.log('BASE_URL:', BASE_URL);
   const tools = useTools();
-
+  defineOptions({
+    name: 'Header'
+  })
   // const isShowH5Preview = ref(false);
 
 </script>
