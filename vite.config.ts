@@ -4,7 +4,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import { resolve } from 'path';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import { ElementPlusResolver, VantResolver } from 'unplugin-vue-components/resolvers';
 import WindiCSS from 'vite-plugin-windicss';
 import DefineOptions from 'unplugin-vue-define-options/vite';
 
@@ -25,7 +25,8 @@ export default ({ mode }) =>
         resolvers: [ElementPlusResolver()],
       }),
       Components({
-        resolvers: [ElementPlusResolver()],
+        dts: true,
+        resolvers: [ElementPlusResolver(), VantResolver()],
       }),
       WindiCSS(),
       DefineOptions(),

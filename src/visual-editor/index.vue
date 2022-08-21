@@ -9,7 +9,7 @@
       </el-aside>
       <el-main>
         <!-- 中间编辑区域start -->
-        <SimularEditor />
+        <SimulatorEditor />
         <!-- 中间编辑区域end -->
         <!-- 右侧属性面板start -->
         <RightAttributePanel />
@@ -22,7 +22,7 @@
 <script setup lang="ts">
   import Header from './components/header/index.vue';
   import LeftAside from './components/left-aside/index.vue';
-  import SimularEditor from './components/simulator-editor/index.vue';
+  import SimulatorEditor from './components/simulator-editor/simulator-editor.vue';
   import RightAttributePanel from './components/right-attribute-panel'
 
   // const BASE_URL = import.meta.env.BASE_URL
