@@ -1,0 +1,8 @@
+vite
+@vitejs/plugin-vue
+path
+unplugin-auto-import/vite
+unplugin-vue-components/vite
+unplugin-vue-components/resolvers
+vite-plugin-windicss
+unplugin-vue-define-options/vite
