@@ -1,3 +1,4 @@
+<!-- 容器插槽 -->
 <template>
   <draggable-transition-group
     v-model="slotChildren"

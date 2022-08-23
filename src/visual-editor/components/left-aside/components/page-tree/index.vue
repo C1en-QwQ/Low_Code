@@ -1,8 +1,11 @@
 <!--页面树-->
 <template>
-  <el-button type="primary" class="!my-10px !mx-6px" :icon="Plus" @click="addPage"
-    >添加页面</el-button
-  >
+  <el-button
+    type="primary"
+    class="!my-10px !mx-6px"
+    :icon="Plus"
+    @click="addPage"
+  >添加页面</el-button>
   <el-tree
     :data="pages"
     :props="defaultProps"
@@ -13,8 +16,8 @@
   >
     <template #default="{ node, data }">
       <span class="custom-tree-node">
-        <span
-          >{{ node.label }}（{{ data.path }}）
+        <span>
+          {{ node.label }}（{{ data.path }}）
           <template v-if="data.isDefault">
             <el-tag size="default">默认</el-tag>
           </template>
@@ -28,9 +31,12 @@
               <el-dropdown-menu>
                 <el-dropdown-item :icon="Edit" @click="editPage(data)">编辑</el-dropdown-item>
                 <el-dropdown-item :icon="Delete" @click="delPage(data)">删除</el-dropdown-item>
-                <el-dropdown-item :icon="Link" @click="setDefaultPage(data)"
-                  >设为首页</el-dropdown-item
+                <el-dropdown-item
+                  :icon="Link"
+                  @click="setDefaultPage(data)"
                 >
+                  设为首页
+                </el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -56,6 +62,7 @@
     icon: Tickets,
   });
 
+  // 表单验证规则
   const rules = {
     title: [{ required: true, message: '请输入页面标题', trigger: 'blur' }],
     path: [{ required: true, message: '请输入页面路径', trigger: 'blur' }],
@@ -64,6 +71,7 @@
   const router = useRouter();
   const route = useRoute();
 
+  // 通过解构得到需要的几个方法和网站的JSON数据
   const { jsonData, setCurrentPage, deletePage, updatePage, incrementPage } = useVisualData();
 
   const ruleFormRef = ref<InstanceType<typeof ElForm>>();
@@ -81,7 +89,7 @@
     path: '',
   });
 
-  // 所有的页面
+  // 所有的页面数据（其中包含页面的路径与标题）
   const pages = computed(() =>
     Object.keys(jsonData.pages).map((key) => ({
       title: jsonData.pages[key].title,
@@ -89,7 +97,7 @@
     })),
   );
 
-  // 点击当前节点
+  // 点击当前节点（点击设置默认页面，即当前操作的页面）
   const handleNodeClick = (data) => {
     setCurrentPage(data.path);
     router.push(data.path);
@@ -100,10 +108,12 @@
    */
   const showOparateModal = () =>
     useModal({
+      // 根据当前操作页面中的值更改标题
       title: operatePageData.value ? '编辑页面' : '新增页面',
       props: {
         width: 380,
       },
+      // 对话框中的内容
       content: () => (
         <ElForm ref={ruleFormRef} model={form.value} rules={rules}>
           <ElFormItem prop={'title'} label={'页面标题'} labelWidth={'80px'}>
@@ -119,18 +129,22 @@
           ruleFormRef.value?.validate(async (valid) => {
             if (valid) {
               const { title, path } = form.value;
+              // 如果路径或标题中有为空（消除输入的为空格的情况）
               if ([title.trim(), path.trim()].includes('')) {
                 return ElMessage.error('标题或路径不能为空！');
               }
+              // 如果存在数据更新页面，不存在的话新建页面
               if (operatePageData.value) {
                 updatePage({
                   newPath: path,
                   oldPath: operatePageData.value.path || path,
                   page: { title },
                 });
+                // 更新后替换路由
                 await router.replace(path);
                 currentNodeKey.value = path;
               } else {
+                // 添加并创建新页面
                 incrementPage(path, createNewPage({ title }));
               }
               resolve(true);

@@ -12,6 +12,7 @@ export default defineComponent({
   order: 3,
   icon: Edit,
   setup() {
+    // 基础组件对象
     const baseWidgets = ref(visualConfig.componentModules.baseWidgets);
 
     const log = (evt) => {
@@ -19,8 +20,10 @@ export default defineComponent({
     };
     // 克隆组件
     const cloneDog = (comp) => {
-      console.log('当前正在拖拽的组件：', comp);
+      // console.log('当前正在拖拽的组件：', comp);
+      // 克隆出来的组件数据
       const newComp = cloneDeep(comp);
+      // 根据数据创建组件对象并返回
       return createNewBlock(newComp);
     };
 

@@ -130,11 +130,12 @@ export type ComponentModules = {
  * @returns {} 返回编辑器注册组件的方法等
  */
  export function createVisualEditorConfig() {
+  // 组件模块，用于按照分类存放物料组件
   const componentModules: ComponentModules = {
     baseWidgets: [],
     containerComponents: [],
   };
-  // const componentList: VisualEditorComponent[] = []
+  // 组件哈希映射表，用于存放物料组件及其对应的属性
   const componentMap: Record<string, VisualEditorComponent> = {};
   return {
     componentModules,
@@ -144,11 +145,14 @@ export type ComponentModules = {
       Props extends Record<string, VisualEditorProps> = {},
       Model extends Record<string, string> = {},
     >(
+      // 所属的组件类型
       moduleName: keyof ComponentModules,
       key: string,
       component: {
         label: string;
+        // 在左侧时预览
         preview: () => JSX.Element;
+        // 在编辑器中渲染
         render: (data: {
           props: { [k in keyof Props]: any };
           model: Partial<{ [k in keyof Model]: any }>;
@@ -156,6 +160,7 @@ export type ComponentModules = {
           block: VisualEditorBlockData;
           custom: Record<string, any>;
         }) => () => JSX.Element;
+        // 组件的属性
         props?: Props;
         model?: Model;
         styles?: CSSProperties;

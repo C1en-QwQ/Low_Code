@@ -10,6 +10,7 @@ import {
 import { ElButton, ElDialog } from 'element-plus';
 import { isFunction } from '@/visual-editor/utils/is';
 
+// 操作窗口选项
 interface ModalOptions {
   title?: string;
   footer?: null | (() => JSX.Element);
@@ -32,7 +33,9 @@ const Modal = defineComponent({
     const instance = getCurrentInstance()!;
 
     const state = reactive({
+      // 对话框配置项
       options: props.options,
+      // 控制对话框显示
       visible: true,
     });
 

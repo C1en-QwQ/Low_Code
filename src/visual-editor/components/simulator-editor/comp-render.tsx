@@ -2,6 +2,7 @@ import { defineComponent, PropType } from 'vue';
 import type { VisualEditorBlockData } from '@/visual-editor/visual-editor.utils';
 import { visualConfig } from '@/visual.config';
 
+// 组件渲染
 export default defineComponent({
   name: 'CompRender',
   props: {

@@ -7,6 +7,7 @@ import {
 } from '@/visual-editor/visual-editor.props';
 import { useGlobalProperties } from '@/hooks/useGlobalProperties';
 
+// 导出组件对象
 export default {
   key: 'button',
   moduleName: 'baseWidgets',
@@ -14,13 +15,14 @@ export default {
   preview: () => <Button type={'primary'}>按钮</Button>,
   render: ({ props, block, styles }) => {
     const { registerRef } = useGlobalProperties();
-
+    // 在编辑器中渲染目标组件
     return () => (
       <div style={styles}>
         <Button ref={(el) => registerRef(el, block._vid)} {...props}></Button>
       </div>
     );
   },
+  // 似乎没什么用的一个属性
   resize: {
     height: true,
     width: true,
@@ -30,9 +32,11 @@ export default {
     { label: '点击按钮，且按钮状态不为加载或禁用时触发', value: 'click' },
     { label: '开始触摸按钮时触发', value: 'touchstart' },
   ],
-  // 组件属性
+  // 组件属性，用于配置组件（其实就是直接用的vant中组件的属性值）
   props: {
+    // 以输入方式更改属性
     text: createEditorInputProp({ label: '按钮文字', defaultValue: '按钮' }),
+    // 以选择方式更改属性
     type: createEditorSelectProp({
       label: '按钮类型',
       options: [

@@ -23,9 +23,10 @@
 </template>
 
 <script setup lang="ts">
-import { useVModel } from '@vueuse/core';
-import { computed } from 'vue';
-import draggable from 'vuedraggable';
+  // 拖拽列表组件
+  import { useVModel } from '@vueuse/core';
+  import { computed } from 'vue';
+  import draggable from 'vuedraggable';
 
   defineOptions({
     name: 'DraggableTransitionGroup',
@@ -52,13 +53,19 @@ import draggable from 'vuedraggable';
   });
   const emit = defineEmits(['update:moduleValue', 'update:drag']);
 
+  // 用于移动的数据列表
   const list = useVModel(props, 'moduleValue', emit);
+  // 用于:class，从而操纵是否可以拖拽
   const isDrag = useVModel(props, 'drag', emit);
 
+  // 拖拽设置
   const dragOptions = computed(() => ({
+    // 拖拽动画（拖拽到目标位置后，其他位置移动的动画）
     animation: 200,
+    // 允许拖拽放到目标位置
     disabled: false,
     scroll: true,
+    // 设置占位符类名
     ghostClass: 'ghost',
   }));
 </script>

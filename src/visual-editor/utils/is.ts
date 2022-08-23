@@ -1,3 +1,5 @@
+// 一些公用的用于类型判断的函数
+
 const toString = Object.prototype.toString;
 
 export function is(val: unknown, type: string) {

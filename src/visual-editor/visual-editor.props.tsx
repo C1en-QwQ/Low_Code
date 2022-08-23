@@ -1,3 +1,4 @@
+// 属性编辑器类型
 export enum VisualEditorPropsType {
   /** 输入框 */
   input = 'input',
@@ -41,8 +42,9 @@ export type VisualEditorProps = {
   table?: VisualEditorTableOption;
 };
 
-/*---------------------------------------select-------------------------------------------*/
+/*---------------------------------------以下拉选择器方式更改属性-------------------------------------------*/
 
+// 下拉选项类型
 export type VisualEditorSelectOptions = {
   label: string;
   value: string | number | boolean | object;
@@ -102,7 +104,7 @@ export function createEditorTableProp({
     defaultValue,
   };
 }
-/*---------------------------------------input-------------------------------------------*/
+/*---------------------------------------输入框方式更改属性-------------------------------------------*/
 
 interface EditorInputProp {
   label: string;
@@ -123,7 +125,7 @@ export function createEditorInputProp({
   };
 }
 
-/*---------------------------------------switch-------------------------------------------*/
+/*---------------------------------------利用开关进行属性的选择-------------------------------------------*/
 interface EditorSwitchProp {
   label: string;
   defaultValue?: boolean;

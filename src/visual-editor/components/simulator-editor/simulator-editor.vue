@@ -21,6 +21,7 @@
               @contextmenu.stop.prevent="onContextmenuBlock($event, outElement)"
               @mousedown="selectComp(outElement)"
             >
+              <!-- 复制组件渲染，如果有插槽就恢复鼠标事件，没有就取消 -->
               <comp-render
                 :key="outElement._vid"
                 :element="outElement"
@@ -74,19 +75,22 @@
   const { currentPage, setCurrentBlock } = useVisualData();
 
   const { globalProperties } = useGlobalProperties();
-
+  // 确保编辑器中的组件无法被拖拽到组件列表中，只可在编辑器界面中进行拖拽移动
   const drag = ref(false);
 
   /**
    * @description 操作当前页面样式表
    */
   watchEffect(() => {
+    // 背景颜色和背景图片
     const { bgImage, bgColor } = currentPage.value.config;
+    // 要先修改的样式
     const bodyStyleStr = `
       .simulator-editor-content {
         background-color: ${bgColor};
         background-image: url(${bgImage});
       }`;
+    // 对样式进行修改，如果之前存在样式就先把之前的样式删掉，然后再添加
     const styleSheets = document.styleSheets[0];
     const firstCssRule = document.styleSheets[0].cssRules[0];
     const isExistContent = firstCssRule.cssText.includes('.simulator-editor-content');
@@ -96,7 +100,7 @@
     styleSheets.insertRule(bodyStyleStr);
   });
 
-  //递归实现
+  //递归实现查找目标组件（其实就是一个多叉树的前序遍历）
   //@leafId  为你要查找的id，
   //@nodes   为原始Json数据
   //@path    供递归使用，不要赋值
@@ -170,7 +174,7 @@
       }
     }
   };
-
+  // 对组件操作
   const onContextmenuBlock = (
     e: MouseEvent,
     block: VisualEditorBlockData,
@@ -185,21 +189,27 @@
             icon="el-icon-document-copy"
             {...{
               onClick: () => {
+                // 获取目标节点的索引
                 const index = parentBlocks.findIndex((item) => item._vid == block._vid);
                 if (index != -1) {
+                  // 函数用于设置复制组件的Vid，并将复制组件的focus状态取消
                   const setBlockVid = (block: VisualEditorBlockData) => {
                     block._vid = `vid_${generateNanoid()}`;
                     block.focus = false;
                     const slots = block?.props?.slots || {};
                     const slotKeys = Object.keys(slots);
+                    // 对插槽里面的组件挨个重新设置Vid
                     if (slotKeys.length) {
                       slotKeys.forEach((slotKey) => {
                         slots[slotKey]?.children?.forEach((child) => setBlockVid(child));
                       });
                     }
                   };
+                  // 复制组件
                   const blockCopy = cloneDeep(parentBlocks[index]);
+                  // 更新Vid
                   setBlockVid(blockCopy);
+                  // 将复制的组件插入原来组件的下面
                   parentBlocks.splice(index + 1, 0, blockCopy);
                 }
               },
@@ -210,12 +220,14 @@
             icon="el-icon-view"
             {...{
               onClick: () =>
+                // 弹窗
                 useModal({
                   title: '节点信息',
                   footer: null,
                   props: {
                     width: 600,
                   },
+                  // 内容显示组件的JSON数据
                   content: () => (
                     <MonacoEditor
                       code={JSON.stringify(block)}

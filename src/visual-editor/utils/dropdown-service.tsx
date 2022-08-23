@@ -1,7 +1,20 @@
-import { computed, createApp, defineComponent, getCurrentInstance, inject, onBeforeUnmount, onMounted, PropType, provide, reactive, ref } from "vue";
+import {
+  computed,
+  createApp,
+  defineComponent,
+  getCurrentInstance,
+  inject,
+  onBeforeUnmount,
+  onMounted,
+  PropType,
+  provide,
+  reactive,
+  ref
+} from "vue";
 import { defer } from "./defer";
 import './dropdown-service.scss';
 
+// 下拉功能选项接口
 interface DropdownServiceOption {
   reference: MouseEvent | HTMLElement;
   content: () => JSX.Element;
@@ -48,6 +61,7 @@ const ServiceComponent = defineComponent({
       methods.show();
     };
 
+    // 控制下拉菜单显示
     const methods = {
       show: async () => {
         await state.mounted;
@@ -93,6 +107,7 @@ const ServiceComponent = defineComponent({
   }
 });
 
+// 下拉菜单选项
 export const DropdownOption = defineComponent({
   props: {
     label: { type: String },
@@ -111,6 +126,7 @@ export const DropdownOption = defineComponent({
 
     return () => (
       <div class="dropdown-option" onClick={handler.onClick}>
+        {/* 没啥卵用，图标不会显示，因为element-plus废弃了这种写法，不影响也就懒得删了 */}
         <i class={props.icon} />
         <span>{props.label}</span>
       </div>
