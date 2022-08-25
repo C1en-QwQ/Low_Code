@@ -144,3 +144,45 @@ export function createEditorSwitchProp({
     defaultValue,
   };
 }
+
+/*---------------------------------------字体颜色-------------------------------------------*/
+
+interface EditorColorProp {
+  label: string;
+  defaultValue?: string;
+}
+
+export function createEditorColorProp({ label, defaultValue }: EditorColorProp): VisualEditorProps {
+  return {
+    type: VisualEditorPropsType.color,
+    label,
+    defaultValue,
+  };
+}
+
+/*---------------------------------------数字输入框 -------------------------------------------*/
+
+interface EditorInputNumberProp {
+  label: string;
+  defaultValue?: any;
+  tips?: string;
+  max?: number;
+  min?: number;
+}
+
+export function createEditorInputNumberProp({
+  label,
+  defaultValue,
+  max,
+  min,
+  tips,
+}: EditorInputNumberProp): VisualEditorProps {
+  return {
+    type: VisualEditorPropsType.inputNumber,
+    label,
+    tips,
+    max,
+    min,
+    defaultValue,
+  };
+}
