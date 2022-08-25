@@ -1,5 +1,6 @@
 vite
 @vitejs/plugin-vue
+@vitejs/plugin-vue-jsx
 path
 unplugin-auto-import/vite
 unplugin-vue-components/vite
