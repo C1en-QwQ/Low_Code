@@ -13,6 +13,7 @@
         <div :class="[`w-1/${tools.length}`]" class="w-1/9">
           <div
             class="tool-item flex flex-col items-center cursor-pointer"
+            @click="toolItem.onClick"
           >
             <el-tooltip class="item" effect="light" :content="toolItem.title" placement="bottom">
               <el-icon>
@@ -27,33 +28,52 @@
     <!-- 右侧工具栏 start -->
     <el-col :span="6" class="right-tools flex flex-row-reverse items-center">
       <el-tooltip class="item" effect="light" content="运行" placement="bottom">
-        <el-button type="primary" size="small" circle class="flex-shrink-0 !p-6px">
+        <el-button
+          type="primary"
+          size="small"
+          circle
+          class="flex-shrink-0 !p-6px"
+          @click="runPreview"
+        >
           <el-icon size="large" color="black"><VideoPlay /></el-icon>
         </el-button>
       </el-tooltip>
       <el-tooltip class="item" effect="light" content="github" placement="bottom">
-        <a href="#" target="_blank">
+        <a href="https://github.com/C1en-QwQ/Low_Code" target="_blank">
           <img :src="`${BASE_URL}github.svg`" alt="" width="30" height="30" />
         </a>
       </el-tooltip>
     </el-col>
     <!-- 右侧工具栏 end -->
   </el-row>
-  <!-- <Preview v-model:visible="isShowH5Preview" /> -->
+  <Preview v-model:visible="isShowH5Preview" />
 </template>
 
 <script setup lang="ts">
   import { VideoPlay } from '@element-plus/icons-vue';
   import { BASE_URL } from '@/visual-editor/utils';
   import { useTools } from './useTools';
-  // import Preview from './preview.vue';
-  // import { ref } from '@vue/reactivity';
+  import Preview from './preview.vue';
+  import { ref } from 'vue';
+  import { localKey, useVisualData } from '@/visual-editor/hooks/useVisualData';
+
   // console.log('BASE_URL:', BASE_URL);
-  const tools = useTools();
   defineOptions({
     name: 'Header'
   })
-  // const isShowH5Preview = ref(false);
+
+  const isShowH5Preview = ref(false);
+
+  const tools = useTools();
+
+  const { jsonData } = useVisualData();
+
+  const runPreview = () => {
+    sessionStorage.setItem(localKey, JSON.stringify(jsonData));
+    localStorage.setItem(localKey, JSON.stringify(jsonData));
+    isShowH5Preview.value = true;
+  }
+
 
 </script>
 

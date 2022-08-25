@@ -11,15 +11,13 @@
   </el-dialog>
 </template>
 
-<script lang="ts">
-  export default {
-    name: 'Preview',
-  };
-</script>
-
 <script setup lang="ts">
   import { useVModel } from '@vueuse/core';
   import { BASE_URL } from '@/visual-editor/utils/index.js';
+
+  defineOptions({
+    name: 'Preview',
+  });
 
   const props = defineProps({
     visible: {

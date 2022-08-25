@@ -16,6 +16,7 @@ import 'element-plus/es/components/message/style/css';
 import { useVisualData, localKey } from '@/visual-editor/hooks/useVisualData';
 import { useModal } from '@/visual-editor/hooks/useModal';
 import MonacoEditor from '@/visual-editor/components/common/monaco-editor/MonacoEditor';
+import { useClipboard } from '@vueuse/core';
 
 
 export const useTools = () => {
@@ -76,6 +77,12 @@ export const useTools = () => {
     {
       title: '导出JSON',
       icon: Download,
+      onClick: () => {
+        const { copy } = useClipboard({ source: JSON.stringify(jsonData) });
+
+        copy().then(() => ElMessage.success('复制成功'))
+              .catch((err) => ElMessage.error(`复制失败：${err}`));
+      },
     },
     {
       title: '真机预览',
@@ -100,10 +107,17 @@ export const useTools = () => {
     {
       title: '预览',
       icon: Position,
+      onClick: () => {
+        localStorage.setItem(localKey, JSON.stringify(jsonData));
+        window.open(location.href.replace('/#/', '/preview/#/'));
+      }
     },
     {
       title: '反馈',
       icon: ChatLineSquare,
+      onClick: () => {
+        window.open('https://github.com/C1en-QwQ/Low_Code/issues/new')
+      }
     },
   ];
 };
